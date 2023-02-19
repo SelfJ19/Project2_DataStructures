@@ -32,12 +32,12 @@ namespace Project2
 
         #region QuickSort()
         /// <summary>
-        /// 
+        /// Method that sorts through an array using pointers and pivots and recursively calls itself to sort the array
         /// </summary>
-        /// <param name="numbers"></param>
-        /// <param name="leftIndex"></param>
-        /// <param name="rightIndex"></param>
-        /// <returns></returns>
+        /// <param name="numbers">name of the array being passed in</param>
+        /// <param name="leftIndex">index at the beginning of the array</param>
+        /// <param name="rightIndex">index at the end of the array</param>
+        /// <returns>the array after being sorted</returns>
         public int[] QuickSort(int[] numbers, int leftIndex, int rightIndex)
         {
             int a = leftIndex;
