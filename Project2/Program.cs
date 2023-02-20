@@ -5,30 +5,79 @@ namespace Project2
 {
     public class Program
     {
+        #region Main()
+        /// <summary>
+        /// Creates the main method that calls and uses the other methods
+        /// </summary>
         public static void Main()
         {
             int[][] numbers = new int[20][];
-                        
-            StreamReader reader = new StreamReader(@"..\..\..\inputJagged.csv");
+            
+            // File path relative to location of the program.
+            string filePath = @"../../../inputJagged.csv";
 
-            // Reads lines while there are still lines to be read
-            while (!reader.EndOfStream)
+            numbers = ReadCSV(filePath);
+
+            // loops the numbers array and passes it into the quicksort method
+            for (int i = 0; i < numbers.Length; i++)
             {
-                // Loops through each of the 20 jagged arrays in numbers
-                for(int i = 0; i < numbers.Length; i++)
-                {
-                    var eachLine = reader.ReadLine();
-                    var numValues = eachLine.Split(',');
-                    numbers[i] = new int[numValues.Length];
+                QuickSort(numbers[i], 0, numbers[i].Length -1);
+            }
+            PrintArray(numbers);
 
-                    // Loops through each of the j values in the numbers[i] array
-                    for(int j = 0; j < numValues.Length; j++)
-                    {
-                        numbers[i][j] = Convert.ToInt32(numValues[j]);
-                    }
-                }
+            Console.WriteLine("If the index says -1 that means the value was not found otherwise it is found at that index.\n");
+
+            // loops the array after being sorted into the BinarySearch method to look for a specific value
+            for(int i = 0; i < numbers.Length; i++)
+            {
+                Console.WriteLine($"Value at Index {BinarySearch(numbers[i], 256)} in array {i}");
             }
         }
+        #endregion
+
+        #region ReadCSV()
+        /// <summary>
+        /// Creates the method that will read in the file
+        /// </summary>
+        /// <param name="fileName">path to the file that is being read in</param>
+        /// <returns>the array after the file is read</returns>
+        public static int[][] ReadCSV(string fileName)
+        {
+            int[][] numbers = new int[20][];
+            StreamReader reader = new StreamReader(fileName);
+
+            int index = 0;
+            while (!reader.EndOfStream)
+            {
+                string eachLine = reader.ReadLine();
+                int[] numValues = eachLine.Split(',').Select(x => x.Trim()).Select(x => int.Parse(x)).ToArray();
+
+                // Add the integers we just read to the array.
+                numbers[index] = numValues;
+                index++;
+            }
+            return numbers;
+        }
+        #endregion
+
+        #region PrintArray()
+        /// <summary>
+        /// Creates the print method for the format of how the array is shown in the console
+        /// </summary>
+        /// <param name="numbers">array that is passed in to be formated for print out</param>
+        public static void PrintArray(int[][] numbers)
+        {
+            // Prints out array
+            foreach (int[] numArray in numbers)
+            {
+                foreach (int num in numArray)
+                {
+                    Console.Write($"{num} | ");
+                }
+                Console.WriteLine("\n");
+            }
+        }
+        #endregion
 
         #region QuickSort()
         /// <summary>
@@ -38,7 +87,7 @@ namespace Project2
         /// <param name="leftIndex">index at the beginning of the array</param>
         /// <param name="rightIndex">index at the end of the array</param>
         /// <returns>the array after being sorted</returns>
-        public int[] QuickSort(int[] numbers, int leftIndex, int rightIndex)
+        public static int[] QuickSort(int[] numbers, int leftIndex, int rightIndex)
         {
             int a = leftIndex;
             int b = rightIndex;
@@ -83,7 +132,7 @@ namespace Project2
         /// <param name="numbers">name of the array</param>
         /// <param name="targetValue">the value being searched for</param>
         /// <returns>either the value that was being searched for or -1 if not found</returns>
-        public int BinarySearch(int[] numbers, int targetValue)
+        public static int BinarySearch(int[] numbers, int targetValue)
         {
             bool checker = false;
             int counter = 0;
@@ -95,7 +144,7 @@ namespace Project2
                 if(numbers[middleIndex] == targetValue)
                 {
                     checker = true;
-                    return targetValue;
+                    return middleIndex;
                 }
                 else if (numbers[middleIndex] > targetValue)
                 {
