@@ -1,8 +1,19 @@
-﻿using System.Collections.Generic;
+﻿///////////////////////////////////////////////////////////////////////////////
+//
+// Author: Jason Self, selfj1@etsu.edu
+// Course: CSCI-2210-001 - Data Structures
+// Assignment: Project 2
+// Description: Creates a QuickSort and BinarySearch methods to sort a jagged array
+//
+///////////////////////////////////////////////////////////////////////////////
+using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Project2
 {
+    /// <summary>
+    /// Creates the class Program that uses all of its methods that are contained within
+    /// </summary>
     public class Program
     {
         #region Main()
